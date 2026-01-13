@@ -2,21 +2,21 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity updown_counter_fixed is
+entity FSMupdown_counter is
     Port (
         i_clk       : in  STD_LOGIC;
         i_reset     : in  STD_LOGIC;
         o_countup   : out STD_LOGIC_VECTOR(3 downto 0);
         o_countdown : out STD_LOGIC_VECTOR(3 downto 0)
     );
-end updown_counter_fixed;
+end FSMupdown_counter;
 
-architecture Behavioral of updown_counter_fixed is
+architecture Behavioral of FSMupdown_counter is
  
     signal r_state   : STD_LOGIC := '0'; 
     signal r_cntup   : unsigned(3 downto 0) := (others => '0');
     signal r_cntdown : unsigned(3 downto 0) := (others => '0');
-    constant c_max_count : integer := 10000000; 
+    constant c_max_count : integer := 50000000; 
     signal r_div_cnt     : integer range 0 to c_max_count := 0;
     signal w_tick        : std_logic := '0';
 
@@ -62,7 +62,7 @@ begin
         end if;
     end process FSM;
 
-    UP_COUNTER_LOGIC: process(i_clk, i_reset)
+    up_counter: process(i_clk, i_reset)
     begin
         if i_reset = '1' then
             r_cntup <= to_unsigned(0, 4);
@@ -79,9 +79,9 @@ begin
                 end if;
             end if;
         end if;
-    end process UP_COUNTER_LOGIC;
+    end process up_counter;
 
-    DOWN_COUNTER_LOGIC: process(i_clk, i_reset)
+    down_counter: process(i_clk, i_reset)
     begin
         if i_reset = '1' then
             r_cntdown <= to_unsigned(15, 4);
@@ -98,17 +98,15 @@ begin
                 end if;
             end if;
         end if;
-    end process DOWN_COUNTER_LOGIC;
-    OUTPUT_HANDLER: process(i_clk, i_reset)
+    end process down_counter;
+    output: process(i_clk, i_reset)
     begin
-        if i_reset = '1' then
-            o_countup   <= "0000";
-            o_countdown <= "1111";
-        elsif rising_edge(i_clk) then
+        if rising_edge(i_clk) then
             o_countup   <= std_logic_vector(r_cntup);
             o_countdown <= std_logic_vector(r_cntdown);
         end if;
-    end process OUTPUT_HANDLER;
+    end process output;
 
 
 end Behavioral;
+
