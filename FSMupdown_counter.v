@@ -38,7 +38,7 @@ begin
         end if;
     end process FREQ_DIVIDER;
 
-    FSM_CONTROLLER: process(i_clk, i_reset)
+    FSM: process(i_clk, i_reset)
     begin
         if i_reset = '1' then
             r_state <= '0';
@@ -60,7 +60,7 @@ begin
                 end case;
             end if;
         end if;
-    end process FSM_CONTROLLER;
+    end process FSM;
 
     UP_COUNTER_LOGIC: process(i_clk, i_reset)
     begin
@@ -109,5 +109,6 @@ begin
             o_countdown <= std_logic_vector(r_cntdown);
         end if;
     end process OUTPUT_HANDLER;
+
 
 end Behavioral;
