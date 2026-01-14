@@ -13,9 +13,9 @@ end FSMupdown_counter;
 
 architecture Behavioral of FSMupdown_counter is
  
-    signal r_state   : STD_LOGIC := '0'; 
-    signal r_cntup   : unsigned(3 downto 0) := (others => '0');
-    signal r_cntdown : unsigned(3 downto 0) := (others => '0');
+    signal state   : STD_LOGIC := '0'; 
+    signal cntup   : unsigned(3 downto 0) := (others => '0');
+    signal cntdown : unsigned(3 downto 0) := (others => '0');
     constant c_max_count : integer := 50000000; 
     signal r_div_cnt     : integer range 0 to c_max_count := 0;
     signal w_tick        : std_logic := '0';
@@ -41,22 +41,22 @@ begin
     FSM: process(i_clk, i_reset)
     begin
         if i_reset = '1' then
-            r_state <= '0';
+            state <= '0';
         elsif rising_edge(i_clk) then
             if w_tick = '1' then
-                case r_state is
+                case state is
                     when '0' =>
-                        if r_cntup >= 15 then
-                            r_state <= '1';
+                        if cntup >= 15 then
+                            state <= '1';
                         end if;
 
                     when '1' =>
-                        if r_cntdown <= 0 then
-                            r_state <= '0';
+                        if cntdown <= 0 then
+                            state <= '0';
                         end if;
                     
                     when others =>
-                        r_state <= '0';
+                        state <= '0';
                 end case;
             end if;
         end if;
@@ -65,17 +65,17 @@ begin
     up_counter: process(i_clk, i_reset)
     begin
         if i_reset = '1' then
-            r_cntup <= to_unsigned(0, 4);
+            cntup <= to_unsigned(0, 4);
         elsif rising_edge(i_clk) then
             if w_tick = '1' then
-                if r_state = '0' then
-                    if r_cntup >= 15 then
-                        r_cntup <= to_unsigned(15, 4);
+                if state = '0' then
+                    if cntup >= 15 then
+                        cntup <= to_unsigned(15, 4);
                     else
-                        r_cntup <= r_cntup + 1;
+                        cntup <= cntup + 1;
                     end if;
                 else
-                    r_cntup <= to_unsigned(0, 4);
+                    cntup <= to_unsigned(0, 4);
                 end if;
             end if;
         end if;
@@ -84,23 +84,24 @@ begin
     down_counter: process(i_clk, i_reset)
     begin
         if i_reset = '1' then
-            r_cntdown <= to_unsigned(15, 4);
+            cntdown <= to_unsigned(15, 4);
         elsif rising_edge(i_clk) then
             if w_tick = '1' then
-                if r_state = '1' then
-                    if r_cntdown <= 0 then
-                        r_cntdown <= to_unsigned(0, 4);
+                if state = '1' then
+                    if cntdown <= 0 then
+                        cntdown <= to_unsigned(0, 4);
                     else
-                        r_cntdown <= r_cntdown - 1;
+                        cntdown <= cntdown - 1;
                     end if;
                 else
-                    r_cntdown <= to_unsigned(15, 4);
+                    cntdown <= to_unsigned(15, 4);
                 end if;
             end if;
         end if;
     end process down_counter;
-            o_countup   <= std_logic_vector(r_cntup);
-            o_countdown <= std_logic_vector(r_cntdown);
+            o_countup   <= std_logic_vector(cntup);
+            o_countdown <= std_logic_vector(cntdown);
 end Behavioral;
+
 
 
