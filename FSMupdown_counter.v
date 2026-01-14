@@ -99,14 +99,8 @@ begin
             end if;
         end if;
     end process down_counter;
-    output: process(i_clk, i_reset)
-    begin
-        if rising_edge(i_clk) then
             o_countup   <= std_logic_vector(r_cntup);
             o_countdown <= std_logic_vector(r_cntdown);
-        end if;
-    end process output;
-
-
 end Behavioral;
+
 
