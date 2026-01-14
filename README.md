@@ -1,6 +1,6 @@
 # FSMupdown_counter
 ![圖片說明文字](Ganttchart.png)<br>
-breakdown<br>
+#breakdown<br>
 ![圖片說明文字](1.png)<br>
 MSC<br>
 ![圖片說明文字](2.png)<br>
