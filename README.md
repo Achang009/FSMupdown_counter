@@ -12,3 +12,6 @@
 ![圖片說明文字](5.png)<br>
 # 波形模擬圖+解釋<br>
 ![圖片說明文字](6.png)
+# 影片<br>
+https://github.com/user-attachments/assets/3f79218f-dd1f-4fcf-9051-5a47e10277d9
+
