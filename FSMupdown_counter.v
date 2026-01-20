@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity FSMupdown_counter is
     Port (
@@ -13,13 +14,13 @@ end FSMupdown_counter;
 
 architecture Behavioral of FSMupdown_counter is
 
-    constant max         : unsigned(3 downto 0) := "1111";
-    constant min         : unsigned(3 downto 0) := "0000";
+    constant max         : STD_LOGIC_VECTOR(3 downto 0) := "1111";
+    constant min         : STD_LOGIC_VECTOR(3 downto 0) := "0000";
     constant C_MAX_COUNT : integer := 25000000; 
 
     signal state     : STD_LOGIC := '0'; 
-    signal cntup     : unsigned(3 downto 0) := min;
-    signal cntdown   : unsigned(3 downto 0) := min;
+    signal cntup     : STD_LOGIC_VECTOR(3 downto 0) := min;
+    signal cntdown   : STD_LOGIC_VECTOR(3 downto 0) := max;
     signal r_div_cnt : integer range 0 to C_MAX_COUNT := 0;
     signal f_clk     : std_logic := '0';
 
@@ -94,8 +95,7 @@ begin
         end if;
     end process down_counter;
 
-    o_countup   <= std_logic_vector(cntup);
-    o_countdown <= std_logic_vector(cntdown);
+    o_countup   <= cntup;
+    o_countdown <= cntdown;
 
 end Behavioral;
-
