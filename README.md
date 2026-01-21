@@ -13,5 +13,8 @@
 # 波形模擬圖+解釋<br>
 ![圖片說明文字](6.png)
 # 影片<br>
-https://github.com/user-attachments/assets/3f79218f-dd1f-4fcf-9051-5a47e10277d9
+
+
+https://github.com/user-attachments/assets/d98668dc-7dea-4d3b-be66-b7b661a14453
+
 
